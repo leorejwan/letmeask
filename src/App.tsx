@@ -6,7 +6,8 @@ function App() {
       <Button text="button 1" />
       <Button text="button 2" />
       <Button text="button 3" />
-      <Button />
+      <Button>this is a child</Button>
+      <Button/>
     </>
   );
 }

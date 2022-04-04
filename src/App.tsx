@@ -6,7 +6,7 @@ function App() {
       <Button text="button 1" />
       <Button text="button 2" />
       <Button text="button 3" />
-      <Button text="button 4" />
+      <Button />
     </>
   );
 }

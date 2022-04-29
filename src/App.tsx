@@ -3,18 +3,51 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import { Home } from './pages/Home';
 import { NewRoom } from './pages/NewRoom';
+import { firebase, auth } from './services/firebase'
 
-export const testContext = createContext({} as any);
+type User = {
+  id: string;
+  name: string;
+  avatar: string;
+} 
+
+type AuthContextType = {
+  user: User | undefined;
+  signInWithGoogle: () => Promise<void>;
+}
+
+export const AuthContext = createContext({} as AuthContextType);
 
 function App() {
-  const [value, setValue] = useState('Teste');
+  const [user, setUser] = useState<User>();
+
+  async function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    
+    const result = await auth.signInWithPopup(provider)
+
+    if(result.user) {
+      const { displayName, photoURL, uid } = result.user
+
+    if(!displayName || !photoURL){
+      throw new Error('missing information from google account.')
+    }
+
+    setUser({
+      id: uid,
+      name: displayName,
+      avatar: photoURL
+      })
+
+    }
+  }
   
   return (
     <BrowserRouter>
-      <testContext.Provider value={{ value, setValue }}>
+      <AuthContext.Provider value={{ user, signInWithGoogle }}>
         <Route path="/" exact component={Home} />
         <Route path="/rooms/new" component={NewRoom} />
-      </testContext.Provider>
+      </AuthContext.Provider>
     
     </BrowserRouter> 
 

@@ -7,11 +7,10 @@ import googleIconImg from '../assets/images/google-icon.svg'
 
 import '../styles/auth.scss'
 import { Button } from '../components/Button'
-import { AuthContext } from '../App'
+import { AuthContext } from '../contexts/AuthContext'
 
 export function NewRoom() {
-    const { user } = useContext(AuthContext);
-
+    // const { user } = useContext(AuthContext);
 
     return (
         <div id="page-auth">
@@ -23,7 +22,6 @@ export function NewRoom() {
             <main>
                 <div className='main-content'>
                     <img src={logoImg} alt="letmeask" />
-                    <h1>{user?.name}</h1>
                     <h2>Criar uma nova sala</h2>
                     <form>
                         <input type="text" placeholder="Nome da sala"></input>

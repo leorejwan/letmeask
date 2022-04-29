@@ -12,7 +12,7 @@ import { Button } from '../components/Button'
 
 export function Home() {
     const history = useHistory();
-    const value = useContext(testContext);
+    const { value, setValue } = useContext(testContext);
 
     function handleCreateNewRoom(){
 

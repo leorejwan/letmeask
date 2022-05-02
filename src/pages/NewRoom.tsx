@@ -2,6 +2,7 @@
 // import { AuthContext } from '../contexts/AuthContext'
 
 import { Link } from 'react-router-dom'
+import { FormEvent } from 'react'
 
 import illustrationImg from '../assets/images/illustration.svg'
 import logoImg from '../assets/images/logo.svg'
@@ -12,6 +13,10 @@ import { Button } from '../components/Button'
 
 export function NewRoom() {
     // const { user } = useContext(AuthContext);
+
+    async function handleCreateRoom(event : FormEvent){
+        event.preventDefault();
+    }
 
     return (
         <div id="page-auth">
@@ -24,7 +29,7 @@ export function NewRoom() {
                 <div className='main-content'>
                     <img src={logoImg} alt="letmeask" />
                     <h2>Criar uma nova sala</h2>
-                    <form>
+                    <form onSubmit={handleCreateRoom}>
                         <input type="text" placeholder="Nome da sala"></input>
                         <Button type="submit">Criar sala</Button>
                     </form>

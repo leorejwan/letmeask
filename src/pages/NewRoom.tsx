@@ -2,7 +2,7 @@
 // import { AuthContext } from '../contexts/AuthContext'
 
 import { Link } from 'react-router-dom'
-import { FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 
 import illustrationImg from '../assets/images/illustration.svg'
 import logoImg from '../assets/images/logo.svg'
@@ -22,6 +22,10 @@ export function NewRoom() {
         console.log(newRoom);
     }
 
+    async function handleSetNewRoom(event : ChangeEvent<HTMLInputElement>){
+        setNewRoom(event.target.value);
+    }
+
     return (
         <div id="page-auth">
             <aside>
@@ -37,7 +41,7 @@ export function NewRoom() {
                         <input 
                             type="text"
                             placeholder="Nome da sala" 
-                            onChange={event => setNewRoom(event.target.value)}
+                            onChange={handleSetNewRoom}
                             value={newRoom}
                         />
                         <Button type="submit">Criar sala</Button>

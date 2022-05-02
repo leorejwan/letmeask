@@ -1,6 +1,3 @@
-// import { useContext } from 'react'
-// import { AuthContext } from '../contexts/AuthContext'
-
 import { Link } from 'react-router-dom'
 import { ChangeEvent, FormEvent, useState } from 'react'
 
@@ -10,16 +7,27 @@ import googleIconImg from '../assets/images/google-icon.svg'
 
 import '../styles/auth.scss'
 import { Button } from '../components/Button'
+import { database } from '../services/firebase'
+import { useAuth } from '../hooks/useAuth'
 
 export function NewRoom() {
-    // const { user } = useContext(AuthContext);
+    const { user } = useAuth();
 
     const [newRoom, setNewRoom] = useState('');
 
     async function handleCreateRoom(event : FormEvent){
         event.preventDefault();
 
-        console.log(newRoom);
+        if (newRoom.trim() === ''){
+            return;
+        }
+
+        const roomRef = database.ref('rooms');
+
+        const firebaseRoom = await roomRef.push({
+            title: newRoom,
+            authorId: user?.id,
+        });
     }
 
     async function handleSetNewRoom(event : ChangeEvent<HTMLInputElement>){

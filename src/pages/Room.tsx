@@ -6,9 +6,19 @@ import logoImg from '../assets/images/logo.svg'
 import { Button } from '../components/Button';
 import { RoomCode } from '../components/RoomCode';
 import { useAuth } from '../hooks/useAuth';
-import { database } from '../services/firebase';
+import { auth, database } from '../services/firebase';
 
 import '../styles/room.scss'
+
+type FirebaseQuestions = Record<string, {
+    author: {
+        name: string;
+        avatar: string;
+    },
+    content: string;
+    isAnswered: boolean;
+    isHighlighted: boolean;
+}>
 
 type RoomParams = {
     id: string;
@@ -23,11 +33,23 @@ export function Room(){
 
     useEffect(() => {
         console.log(roomId)
-        
+
         const roomRef = database.ref(`rooms/${roomId}`);
 
         roomRef.once('value', room => {
-            console.log(room.val());
+            const databaseRoom = room.val();
+            const firebaseQuestions = databaseRoom.questions as FirebaseQuestions ?? {};
+
+            const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+                return {
+                    id : key,
+                    content: value.content,
+                    author: value.author,
+                    isHighlighted: value.isHighlighted,
+                    isAnswered: value.isAnswered
+                }
+            })
+            console.log(parsedQuestions);
         })
     }, [roomId])
 

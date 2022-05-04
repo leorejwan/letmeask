@@ -58,7 +58,10 @@ export function AdminRoom(){
             <header>
                 <div className="content">
                     <img src={logoImg} alt="letmeask" />
-                    <RoomCode code={roomId} />
+                    <div>
+                        <RoomCode code={roomId} />
+                        <Button>Encerrar sala</Button>
+                    </div>
                 </div>
             </header>
             <main>
@@ -66,28 +69,6 @@ export function AdminRoom(){
                     <h1>Sala {title}</h1>
                     { questions.length > 0 && <span>{questions.length} pergunta{questions.length > 1 && 's'}</span> }
                 </div>
-
-                <form onSubmit={handleSendQuestion}>
-                    <textarea 
-                        placeholder="o que quer perguntar" 
-                        onChange={event => setNewQuestion(event.target.value)}
-                        value={newQuestion}
-                    />
-
-                    <div className="form-footer">
-                        { user ? (
-                            <div className="user-info">
-                                <img src={user.avatar} alt={user.name} />
-                                <span>{user.name}</span>
-                            </div>
-                        ) : (
-                            <span>Para enviar uma perguntas, <button>faça login</button>.</span> 
-                        )}
-                        
-                        <Button type="submit" disabled={!user}>Enviar pergunta</Button>
-                    </div>
-                </form>
-
                 <div className="question-list">
                     {questions.map((question) => {
                         return (
